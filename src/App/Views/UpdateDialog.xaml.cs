@@ -14,6 +14,15 @@ public partial class UpdateDialog : Window
         DataContext = model;
         model.CloseRequested += OnModelCloseRequested;
         Closing += (_, _) => model.CloseRequested -= OnModelCloseRequested;
+        Loaded += (_, _) =>
+        {
+            // The check must start on its own; otherwise the dialog would stay on
+            // "Checking for updates…" forever.
+            if (!model.HasUpdate && model.Manifest is null)
+            {
+                _ = model.CheckForUpdatesAsync();
+            }
+        };
     }
 
     /// <summary>Shows the dialog with a manifest that has already been fetched.</summary>
