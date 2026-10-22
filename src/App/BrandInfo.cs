@@ -13,7 +13,7 @@ public static class BrandInfo
     public const string ApplicationName = "HyperPDF";
 
     /// <summary>Application version. Kept in sync with the assembly version by unit tests.</summary>
-    public const string ApplicationVersion = "1.0.0";
+    public const string ApplicationVersion = "1.0.1";
 
     /// <summary>Legal name of the developer.</summary>
     public const string DeveloperName = "Anwarul Haque";

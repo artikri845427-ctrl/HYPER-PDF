@@ -46,7 +46,7 @@ public sealed class BrandingTests
     public void ApplicationNameIsHyperPdf()
     {
         Assert.Equal("HyperPDF", BrandInfo.ApplicationName);
-        Assert.Equal("1.0.0", BrandInfo.ApplicationVersion);
+        Assert.Equal("1.0.1", BrandInfo.ApplicationVersion);
     }
 
     [Fact]

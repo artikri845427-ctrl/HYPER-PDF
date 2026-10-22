@@ -14,7 +14,7 @@
 
   <PropertyGroup>
     <HyperPdfProductName>HyperPDF</HyperPdfProductName>
-    <HyperPdfVersion>1.0.0</HyperPdfVersion>
+    <HyperPdfVersion>1.0.1</HyperPdfVersion>
     <HyperPdfCompany>Anwarul Haque (@HYPERMX7)</HyperPdfCompany>
     <HyperPdfAuthor>Anwarul Haque (@HYPERMX7)</HyperPdfAuthor>
     <HyperPdfCopyright>&#169; 2026 Anwarul Haque (@HYPERMX7). All rights reserved.</HyperPdfCopyright>
