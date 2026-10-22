@@ -1,7 +1,5 @@
 // Author: Anwarul Haque (@HYPERMX7) | Contact: 7739399007
-using System.Diagnostics;
 using System.Windows;
-using System.Windows.Navigation;
 
 namespace HyperPDF.Views;
 
@@ -12,17 +10,6 @@ public partial class AboutDialog : Window
     public AboutDialog()
     {
         InitializeComponent();
-
-        // Absolute external URIs are rejected by the XAML loader when set in markup,
-        // so the repository link is assigned here instead.
-        try
-        {
-            RepositoryLink.NavigateUri = new Uri(BrandInfo.RepositoryUrl, UriKind.Absolute);
-        }
-        catch (UriFormatException)
-        {
-            // Leave the link inert if the configured URL is malformed.
-        }
     }
 
     /// <summary>Shows the about dialog.</summary>
@@ -49,19 +36,5 @@ public partial class AboutDialog : Window
         {
             UpdateDialog.ShowCheck(AppServices.Current);
         }
-    }
-
-    private void OnRepositoryNavigate(object sender, RequestNavigateEventArgs e)
-    {
-        try
-        {
-            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true });
-        }
-        catch (Exception ex) when (ex is System.ComponentModel.Win32Exception or InvalidOperationException)
-        {
-            // The browser could not be started.
-        }
-
-        e.Handled = true;
     }
 }

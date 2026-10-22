@@ -56,7 +56,6 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Developer" Style="{StaticResource CaptionTextStyle}" />
@@ -68,15 +67,8 @@
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Contact" Style="{StaticResource CaptionTextStyle}" Margin="0,6,0,0" />
                     <TextBlock Grid.Row="2" Grid.Column="1" Text="{x:Static local:BrandInfo.ContactNumber}" Style="{StaticResource BaseTextStyle}" Margin="0,6,0,0" />
 
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Repository" Style="{StaticResource CaptionTextStyle}" Margin="0,6,0,0" />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="PDF engine" Style="{StaticResource CaptionTextStyle}" Margin="0,6,0,0" />
                     <TextBlock Grid.Row="3" Grid.Column="1" Margin="0,6,0,0">
-                        <Hyperlink Name="RepositoryLink" RequestNavigate="OnRepositoryNavigate">
-                            <TextBlock Text="{x:Static local:BrandInfo.RepositoryUrl}" />
-                        </Hyperlink>
-                    </TextBlock>
-
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="PDF engine" Style="{StaticResource CaptionTextStyle}" Margin="0,6,0,0" />
-                    <TextBlock Grid.Row="4" Grid.Column="1" Margin="0,6,0,0">
                         <Run Text="PDFium" />
                         <Run Text="{x:Static local:BrandInfo.PdfiumVersion}" />
                     </TextBlock>
