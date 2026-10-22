@@ -7,7 +7,7 @@
 #define Brand_Author "Anwarul Haque (@HYPERMX7)"
 #define Brand_Copyright "© 2026 Anwarul Haque (@HYPERMX7). All rights reserved."
 #define Brand_Contact "7739399007"
-#define Brand_RepositoryUrl "https://github.com/HYPERMX7/HyperPDF"
+#define Brand_RepositoryUrl "https://github.com/artikri845427-ctrl/HYPER-PDF"
 #define Brand_Description "HyperPDF is a fast, modern Windows PDF reader with native Explorer thumbnail and preview support."
 #define Brand_CreditLine "Developed by Anwarul Haque (@HYPERMX7) | Contact: 7739399007"
 #define Brand_AppId "{{9C6F1B27-5F3E-4E4C-9F5A-1B2C3D4E5F60}}"

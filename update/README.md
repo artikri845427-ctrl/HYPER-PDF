@@ -1,4 +1,4 @@
-# Update manifest of HyperPDF
+﻿# Update manifest of HyperPDF
 
 The automatic update feature downloads and installs new versions of HyperPDF using
 the manifest at `update/update.json`. The application fetches this file from
@@ -16,7 +16,7 @@ the manifest at `update/update.json`. The application fetches this file from
    ```json
    {
      "version": "1.1.0",
-     "downloadUrl": "https://github.com/HYPERMX7/HyperPDF/releases/download/v1.1.0/HyperPDF-Setup-1.1.0.exe",
+     "downloadUrl": "https://github.com/artikri845427-ctrl/HYPER-PDF/releases/download/v1.1.0/HyperPDF-Setup-1.1.0.exe",
      "releaseNotes": "New features and fixes.",
      "sha256": "<sha256 hash of the installer, optional but recommended>"
    }

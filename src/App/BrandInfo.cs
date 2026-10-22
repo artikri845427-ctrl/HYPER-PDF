@@ -34,7 +34,7 @@ public static class BrandInfo
     public const string StatusBarSignature = "by @HYPERMX7";
 
     /// <summary>Public source repository.</summary>
-    public const string RepositoryUrl = "https://github.com/HYPERMX7/HyperPDF";
+    public const string RepositoryUrl = "https://github.com/artikri845427-ctrl/HYPER-PDF";
 
     /// <summary>Company / publisher name written to the Windows registry by the installer.</summary>
     public const string Publisher = "Anwarul Haque (@HYPERMX7)";
@@ -60,5 +60,5 @@ public static class BrandInfo
     /// URL of the update manifest. The developer publishes a new update by bumping this JSON
     /// file and attaching the matching installer to a GitHub release.
     /// </summary>
-    public const string UpdateCheckUrl = "https://raw.githubusercontent.com/HYPERMX7/HyperPDF/main/update/update.json";
+    public const string UpdateCheckUrl = "https://raw.githubusercontent.com/artikri845427-ctrl/HYPER-PDF/main/update/update.json";
 }

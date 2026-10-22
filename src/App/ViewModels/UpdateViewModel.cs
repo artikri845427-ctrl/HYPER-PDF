@@ -217,13 +217,14 @@ public sealed class UpdateViewModel : ViewModelBase
             IsDownloading = false;
             StatusText = "Download cancelled. You can try again later.";
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             if (IsDownloading)
             {
                 IsDownloading = false;
                 StatusText = "The update could not be completed.";
-                _errorDetail = ex.Message;
+                // Keep the detail generic so internal sources (and any URLs) never reach the UI.
+                _errorDetail = "Please check your internet connection and try again.";
                 OnPropertyChanged(nameof(ErrorDetail));
                 HasError = true;
             }
