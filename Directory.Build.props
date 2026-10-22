@@ -1,0 +1,25 @@
+<Project>
+
+  <!--
+    Author: Anwarul Haque (@HYPERMX7) | Contact: 7739399007
+
+    HyperPDF - single source of truth for product branding and version metadata.
+    This file is consumed by:
+      * src/App/HyperPDF.csproj            (EXE version/resource metadata)
+      * src/App/HyperPDF.Tests             (branding consistency tests)
+      * installer/build-installer.ps1      (Inno Setup metadata -> installer/brand.iss)
+      * src/ThumbnailProvider/CMakeLists.txt (native DLL version resource)
+      * .github/workflows/*                 (CI artifact naming)
+  -->
+
+  <PropertyGroup>
+    <HyperPdfProductName>HyperPDF</HyperPdfProductName>
+    <HyperPdfVersion>1.0.0</HyperPdfVersion>
+    <HyperPdfCompany>Anwarul Haque (@HYPERMX7)</HyperPdfCompany>
+    <HyperPdfAuthor>Anwarul Haque (@HYPERMX7)</HyperPdfAuthor>
+    <HyperPdfCopyright>&#169; 2026 Anwarul Haque (@HYPERMX7). All rights reserved.</HyperPdfCopyright>
+    <HyperPdfContact>7739399007</HyperPdfContact>
+    <HyperPdfRepository>https://github.com/HYPERMX7/HyperPDF</HyperPdfRepository>
+  </PropertyGroup>
+
+</Project>

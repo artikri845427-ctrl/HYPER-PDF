@@ -1,0 +1,116 @@
+<!--
+  Author: Anwarul Haque (@HYPERMX7) | Contact: 7739399007
+  Modal dialog showing the automatic update flow of HyperPDF: check, offer, download and install.
+-->
+<Window x:Class="HyperPDF.Views.UpdateDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:HyperPDF"
+        Title="HyperPDF Update"
+        Width="460"
+        SizeToContent="Height"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False"
+        Background="{DynamicResource SurfaceBrush}">
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Border Width="52" Height="52" CornerRadius="12" Background="{DynamicResource AccentBrush}">
+                <Path Data="{StaticResource IconLogo}"
+                      Width="28"
+                      Height="28"
+                      Stroke="{DynamicResource AccentForegroundBrush}"
+                      StrokeThickness="1.4"
+                      StrokeLineJoin="Round"
+                      StrokeStartLineCap="Round"
+                      StrokeEndLineCap="Round"
+                      Stretch="Uniform" />
+            </Border>
+
+            <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
+                <TextBlock Text="{Binding StatusText}" Style="{StaticResource HeadingTextStyle}" FontSize="17" />
+                <TextBlock Text="{Binding AvailableVersion, StringFormat=New version {0}}"
+                           Style="{StaticResource SecondaryTextStyle}"
+                           Margin="0,4,0,0"
+                           Visibility="{Binding HasUpdate, Converter={StaticResource BoolToVisibility}}" />
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Update details -->
+        <Border Grid.Row="1"
+                Style="{StaticResource CardStyle}"
+                Margin="0,16,0,0"
+                Visibility="{Binding HasUpdate, Converter={StaticResource BoolToVisibility}}">
+            <StackPanel>
+                <TextBlock Text="This release contains new features and bug fixes."
+                           Style="{StaticResource SecondaryTextStyle}"
+                           TextWrapping="Wrap" />
+                <TextBlock Text="{Binding ReleaseNotes}"
+                           Style="{StaticResource BaseTextStyle}"
+                           TextWrapping="Wrap"
+                           Margin="0,8,0,0" />
+            </StackPanel>
+        </Border>
+
+        <!-- Progress -->
+        <StackPanel Grid.Row="2" Margin="0,16,0,0" Visibility="{Binding IsDownloading, Converter={StaticResource BoolToVisibility}}">
+            <ProgressBar Height="6"
+                         Minimum="0"
+                         Maximum="100"
+                         IsIndeterminate="{Binding IsIndeterminate}"
+                         Value="{Binding ProgressPercent, Mode=OneWay}" />
+            <TextBlock Text="{Binding ProgressPercentText}"
+                       Style="{StaticResource CaptionTextStyle}"
+                       Margin="0,6,0,0"
+                       HorizontalAlignment="Right" />
+        </StackPanel>
+
+        <!-- Error -->
+        <TextBlock Grid.Row="3"
+                   Text="{Binding ErrorDetail}"
+                   Style="{StaticResource CaptionTextStyle}"
+                   TextWrapping="Wrap"
+                   Margin="0,12,0,0"
+                   Foreground="{DynamicResource DangerBrush}"
+                   Visibility="{Binding HasError, Converter={StaticResource BoolToVisibility}}" />
+
+        <!-- Buttons -->
+        <Grid Grid.Row="4" Margin="0,18,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Not now"
+                        Style="{StaticResource SecondaryButtonStyle}"
+                        Command="{Binding CancelCommand}" />
+                <Button Content="Skip this version"
+                        Style="{StaticResource SecondaryButtonStyle}"
+                        Command="{Binding SkipVersionCommand}"
+                        Margin="8,0,0,0"
+                        Visibility="{Binding HasUpdate, Converter={StaticResource BoolToVisibility}}" />
+                <Button Content="Retry"
+                        Style="{StaticResource SecondaryButtonStyle}"
+                        Command="{Binding CheckForUpdatesCommand}"
+                        Margin="8,0,0,0"
+                        Visibility="{Binding HasError, Converter={StaticResource BoolToVisibility}}" />
+                <Button Content="Check again"
+                        Style="{StaticResource SecondaryButtonStyle}"
+                        Command="{Binding CheckForUpdatesCommand}"
+                        Margin="8,0,0,0"
+                        Visibility="{Binding IsChecking, Converter={StaticResource InverseBoolToVisibility}}" />
+                <Button Content="Update now"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Command="{Binding UpdateNowCommand}"
+                        Margin="8,0,0,0"
+                        Visibility="{Binding HasUpdate, Converter={StaticResource BoolToVisibility}}" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,57 @@
+<Window x:Class="HyperPDF.Views.SplashWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:HyperPDF"
+        Title="HyperPDF"
+        Width="440"
+        Height="250"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterScreen">
+
+    <Border Margin="12"
+            Background="{DynamicResource SurfaceBrush}"
+            BorderBrush="{DynamicResource BorderBrush}"
+            BorderThickness="1"
+            CornerRadius="12">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Border Width="72" Height="72" CornerRadius="16" Background="{DynamicResource AccentBrush}">
+                    <Path Data="{StaticResource IconLogo}"
+                          Width="38"
+                          Height="38"
+                          Stroke="{DynamicResource AccentForegroundBrush}"
+                          StrokeThickness="1.4"
+                          StrokeLineJoin="Round"
+                          StrokeStartLineCap="Round"
+                          StrokeEndLineCap="Round"
+                          Stretch="Uniform" />
+                </Border>
+
+                <TextBlock Text="{x:Static local:BrandInfo.ApplicationName}"
+                           Style="{StaticResource TitleTextStyle}"
+                           HorizontalAlignment="Center"
+                           Margin="0,16,0,0" />
+
+                <TextBlock Text="{x:Static local:BrandInfo.ApplicationVersion}"
+                           Style="{StaticResource SecondaryTextStyle}"
+                           HorizontalAlignment="Center"
+                           Margin="0,2,0,0" />
+            </StackPanel>
+
+            <TextBlock Grid.Row="1"
+                       Text="{x:Static local:BrandInfo.CreditLine}"
+                       Style="{StaticResource CaptionTextStyle}"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,14" />
+        </Grid>
+    </Border>
+</Window>

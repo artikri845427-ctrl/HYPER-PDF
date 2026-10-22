@@ -1,0 +1,35 @@
+// Author: Anwarul Haque (@HYPERMX7) | Contact: 7739399007
+//
+// The version resource of the native Shell extensions. The values are filled in by CMake
+// from Directory.Build.props, they are the single source of truth for the branding.
+
+#include <winver.h>
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION @HYPERPDF_FILE_VERSION@
+PRODUCTVERSION @HYPERPDF_FILE_VERSION@
+FILEFLAGSMASK VS_FFI_FILEFLAGSMASK
+FILEFLAGS 0x0L
+FILEOS VOS_NT_WINDOWS32
+FILETYPE VFT_DLL
+FILESUBTYPE VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName", "@HYPERPDF_COMPANY@"
+            VALUE "FileDescription", "@HYPERPDF_DESCRIPTION@"
+            VALUE "FileVersion", "@HYPERPDF_VERSION@"
+            VALUE "InternalName", "@HYPERPDF_INTERNAL_NAME@"
+            VALUE "LegalCopyright", "@HYPERPDF_COPYRIGHT@"
+            VALUE "OriginalFilename", "@HYPERPDF_ORIGINAL_FILENAME@"
+            VALUE "ProductName", "@HYPERPDF_PRODUCT@"
+            VALUE "ProductVersion", "@HYPERPDF_VERSION@"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END

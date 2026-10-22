@@ -1,0 +1,10 @@
+# Build artifacts
+build/
+src/**/bin/
+src/**/obj/
+*.user
+*.suo
+
+# Runtime artifacts
+*.dmp
+install.log

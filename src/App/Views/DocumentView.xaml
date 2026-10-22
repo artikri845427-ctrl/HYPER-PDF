@@ -1,0 +1,164 @@
+<UserControl x:Class="HyperPDF.Views.DocumentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:HyperPDF.Controls"
+             xmlns:vm="clr-namespace:HyperPDF.ViewModels"
+             d:DataContext="{d:DesignInstance Type=vm:DocumentViewModel}"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             Background="{DynamicResource WindowBackgroundBrush}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- ======================= Thumbnail sidebar ======================= -->
+        <Border x:Name="Sidebar"
+                Grid.Column="0"
+                Width="188"
+                Background="{DynamicResource SurfaceAltBrush}"
+                BorderBrush="{DynamicResource BorderBrush}"
+                BorderThickness="0,0,1,0"
+                Visibility="{Binding DataContext.IsSidebarVisible, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BoolToVisibility}, FallbackValue=Visible}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0"
+                           Text="Pages"
+                           Style="{StaticResource CaptionTextStyle}"
+                           Margin="12,10,0,6" />
+
+                <ListBox x:Name="ThumbnailList"
+                         Grid.Row="1"
+                         Style="{StaticResource ThumbnailListStyle}"
+                         ItemContainerStyle="{StaticResource ThumbnailListItemStyle}"
+                         ItemsSource="{Binding Thumbnails}"
+                         SelectedIndex="{Binding CurrentPageIndex, Mode=TwoWay}"
+                         SelectionChanged="OnThumbnailSelected">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <Border Background="White"
+                                        BorderBrush="{DynamicResource BorderBrush}"
+                                        BorderThickness="1"
+                                        Width="120">
+                                    <Image Source="{Binding Image}"
+                                           Width="118"
+                                           Stretch="Uniform"
+                                           RenderOptions.BitmapScalingMode="HighQuality" />
+                                </Border>
+                                <TextBlock Text="{Binding PageNumber}"
+                                           Style="{StaticResource CaptionTextStyle}"
+                                           HorizontalAlignment="Center"
+                                           Margin="0,4,0,0" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </Border>
+
+        <!-- ========================= Document area ======================== -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Find bar -->
+            <Border x:Name="FindBar"
+                    Grid.Row="0"
+                    Visibility="Collapsed"
+                    Background="{DynamicResource SurfaceBrush}"
+                    BorderBrush="{DynamicResource BorderBrush}"
+                    BorderThickness="0,0,0,1"
+                    Padding="10,7">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="260" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Path Grid.Column="0"
+                          Data="{StaticResource IconSearch}"
+                          Style="{StaticResource ToolbarIconStyle}"
+                          VerticalAlignment="Center"
+                          Margin="0,0,8,0" />
+
+                    <TextBox x:Name="FindTextBox"
+                             Grid.Column="1"
+                             Style="{StaticResource AppTextBoxStyle}"
+                             VerticalContentAlignment="Center"
+                             KeyDown="OnFindKeyDown" />
+
+                    <TextBlock Grid.Column="2"
+                               Text="{Binding SearchStatusText}"
+                               Style="{StaticResource CaptionTextStyle}"
+                               VerticalAlignment="Center"
+                               Margin="10,0,10,0" />
+
+                    <StackPanel Grid.Column="3" Orientation="Horizontal">
+                        <Button Style="{StaticResource IconButtonStyle}"
+                                Command="{Binding FindPreviousCommand}"
+                                ToolTip="Previous match (Shift+Enter)">
+                            <Path Data="{StaticResource IconChevronUp}" Style="{StaticResource ToolbarIconStyle}" />
+                        </Button>
+                        <Button Style="{StaticResource IconButtonStyle}"
+                                Command="{Binding FindNextCommand}"
+                                ToolTip="Next match (Enter)">
+                            <Path Data="{StaticResource IconChevronDown}" Style="{StaticResource ToolbarIconStyle}" />
+                        </Button>
+                    </StackPanel>
+
+                    <Button Grid.Column="4"
+                            Style="{StaticResource IconButtonStyle}"
+                            Command="{Binding ClearSearchCommand}"
+                            ToolTip="Close the search">
+                        <Path Data="{StaticResource IconClose}" Style="{StaticResource ToolbarIconStyle}" />
+                    </Button>
+                </Grid>
+            </Border>
+
+            <!-- Pages -->
+            <ScrollViewer x:Name="PageScrollViewer"
+                          Grid.Row="1"
+                          VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Auto"
+                          PanningMode="VerticalOnly"
+                          Background="{DynamicResource PageBackgroundBrush}"
+                          ScrollChanged="OnScrollChanged">
+                <ItemsControl x:Name="PageItems"
+                              ItemsSource="{Binding Pages}"
+                              Focusable="False"
+                              HorizontalAlignment="Center"
+                              Margin="0,16,0,16">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel Orientation="Vertical" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Height="{Binding ContainerHeight}"
+                                    Width="{Binding ContainerWidth}"
+                                    Margin="0,0,0,16">
+                                <controls:PdfPageView Page="{Binding}"
+                                                      Document="{Binding DataContext, RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</UserControl>

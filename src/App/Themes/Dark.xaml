@@ -1,0 +1,57 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--
+        Author: Anwarul Haque (@HYPERMX7) | Contact: 7739399007
+        Dark theme palette. The resource keys are identical to the ones of the light theme.
+    -->
+
+    <Color x:Key="WindowBackgroundColor">#14171C</Color>
+    <Color x:Key="SurfaceColor">#1C2027</Color>
+    <Color x:Key="SurfaceAltColor">#232830</Color>
+    <Color x:Key="SurfaceHoverColor">#2C323B</Color>
+    <Color x:Key="WindowButtonHoverColor">#333B46</Color>
+    <Color x:Key="WindowButtonPressedColor">#3B4450</Color>
+    <Color x:Key="BorderColor">#333A45</Color>
+    <Color x:Key="BorderStrongColor">#474F5C</Color>
+    <Color x:Key="TextPrimaryColor">#E8ECF2</Color>
+    <Color x:Key="TextSecondaryColor">#98A2B0</Color>
+    <Color x:Key="TextDisabledColor">#69727E</Color>
+    <Color x:Key="AccentColor">#5C8DFF</Color>
+    <Color x:Key="AccentHoverColor">#7BA5FF</Color>
+    <Color x:Key="AccentPressedColor">#3D6FE0</Color>
+    <Color x:Key="AccentForegroundColor">#0B1220</Color>
+    <Color x:Key="AccentSoftColor">#1E2A45</Color>
+    <Color x:Key="DangerColor">#FF7B72</Color>
+    <Color x:Key="WarningColor">#E3B341</Color>
+    <Color x:Key="SuccessColor">#3FB950</Color>
+    <Color x:Key="PageBackgroundColor">#0D1014</Color>
+    <Color x:Key="SelectionColor">#2B4166</Color>
+    <Color x:Key="ScrollBarColor">#3C444F</Color>
+    <Color x:Key="ShadowColor">#66000000</Color>
+
+    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{StaticResource WindowBackgroundColor}" />
+    <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource SurfaceColor}" />
+    <SolidColorBrush x:Key="SurfaceAltBrush" Color="{StaticResource SurfaceAltColor}" />
+    <SolidColorBrush x:Key="SurfaceHoverBrush" Color="{StaticResource SurfaceHoverColor}" />
+    <SolidColorBrush x:Key="WindowButtonHoverBrush" Color="{StaticResource WindowButtonHoverColor}" />
+    <SolidColorBrush x:Key="WindowButtonPressedBrush" Color="{StaticResource WindowButtonPressedColor}" />
+    <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource BorderColor}" />
+    <SolidColorBrush x:Key="BorderStrongBrush" Color="{StaticResource BorderStrongColor}" />
+    <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimaryColor}" />
+    <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondaryColor}" />
+    <SolidColorBrush x:Key="TextDisabledBrush" Color="{StaticResource TextDisabledColor}" />
+    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
+    <SolidColorBrush x:Key="AccentHoverBrush" Color="{StaticResource AccentHoverColor}" />
+    <SolidColorBrush x:Key="AccentPressedBrush" Color="{StaticResource AccentPressedColor}" />
+    <SolidColorBrush x:Key="AccentForegroundBrush" Color="{StaticResource AccentForegroundColor}" />
+    <SolidColorBrush x:Key="AccentSoftBrush" Color="{StaticResource AccentSoftColor}" />
+    <SolidColorBrush x:Key="DangerBrush" Color="{StaticResource DangerColor}" />
+    <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource WarningColor}" />
+    <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource SuccessColor}" />
+    <SolidColorBrush x:Key="PageBackgroundBrush" Color="{StaticResource PageBackgroundColor}" />
+    <SolidColorBrush x:Key="SelectionBrush" Color="{StaticResource SelectionColor}" />
+    <SolidColorBrush x:Key="ScrollBarBrush" Color="{StaticResource ScrollBarColor}" />
+    <SolidColorBrush x:Key="ShadowBrush" Color="{StaticResource ShadowColor}" />
+
+</ResourceDictionary>

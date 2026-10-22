@@ -1,0 +1,96 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <!-- System.Windows.Forms is required for the native print dialog and the printer settings. -->
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>12.0</LangVersion>
+    <RootNamespace>HyperPDF</RootNamespace>
+    <AssemblyName>HyperPDF</AssemblyName>
+    <Platforms>x64</Platforms>
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>..\..\assets\icon\HyperPDF.ico</ApplicationIcon>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <Product>$(HyperPdfProductName)</Product>
+    <Company>$(HyperPdfCompany)</Company>
+    <Authors>$(HyperPdfAuthor)</Authors>
+    <Copyright>$(HyperPdfCopyright)</Copyright>
+    <Version>$(HyperPdfVersion)</Version>
+    <FileVersion>$(HyperPdfVersion).0</FileVersion>
+    <AssemblyVersion>$(HyperPdfVersion).0</AssemblyVersion>
+    <InformationalVersion>$(HyperPdfVersion)</InformationalVersion>
+    <ProductVersion>$(HyperPdfVersion)</ProductVersion>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CA1416;WFAC010</NoWarn>
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+      The WinForms namespace is only needed for the print dialog. Removing the implicit global
+      using keeps the WPF types (Application, UserControl, KeyEventArgs) unambiguous.
+    -->
+    <Using Remove="System.Windows.Forms" />
+    <Using Include="System.IO" />
+    <Using Include="System.Net.Http" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--
+      PDFium native binaries (pdfium.dll, x64 + x86) and the matching public headers.
+      Pinned version 158.0.8111 == bblanchon/pdfium-binaries release "chromium/8111".
+      The identical binaries are used by the native Shell extensions, see tools/fetch-pdfium.ps1.
+    -->
+    <PackageReference Include="bblanchon.PDFium.Win32" Version="158.0.8111" GeneratePathProperty="true" />
+    <!-- System.Drawing.Printing provides the printer selection dialog and page ranges. -->
+    <PackageReference Include="System.Drawing.Common" Version="8.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--
+      The unit test project lives inside the application folder, therefore its sources must be
+      excluded from the default globs of the application.
+    -->
+    <Compile Remove="HyperPDF.Tests\**\*.cs" />
+    <None Remove="HyperPDF.Tests\**" />
+    <EmbeddedResource Remove="HyperPDF.Tests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The developer name has no dedicated assembly attribute, therefore it is stored as metadata. -->
+    <AssemblyMetadata Include="Author" Value="$(HyperPdfAuthor)" />
+    <AssemblyMetadata Include="Contact" Value="$(HyperPdfContact)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--
+      The window icon is resolved through the WPF resource system (Icon="HyperPDF.ico"),
+      therefore the icon must be embedded as an assembly resource and not just copied.
+    -->
+    <Resource Include="..\..\assets\icon\HyperPDF.ico" Link="HyperPDF.ico" />
+  </ItemGroup>
+
+  <!--
+    Guarantee that pdfium.dll sits next to HyperPDF.exe even for a non RID specific build.
+    Without this the native library would only live in runtimes/<rid>/native and would not be
+    discoverable by a deployment that is copied as a plain folder.
+  -->
+  <Target Name="CopyPdfiumNative" AfterTargets="Build">
+    <PropertyGroup>
+      <PdfiumNativeSource>$(Pkgbblanchon_PDFium_Win32)\runtimes\win-x64\native\pdfium.dll</PdfiumNativeSource>
+    </PropertyGroup>
+    <Copy SourceFiles="$(PdfiumNativeSource)"
+          DestinationFolder="$(OutDir)"
+          Condition="Exists('$(PdfiumNativeSource)')"
+          SkipUnchangedFiles="true" />
+  </Target>
+
+</Project>

@@ -1,0 +1,12 @@
+; Author: Anwarul Haque (@HYPERMX7) | Contact: 7739399007
+;
+; The exports of HyperPDFThumbnailProvider.dll. The module definition file keeps the
+; exported names free of decorations on x86 and x64.
+
+LIBRARY "HyperPDFThumbnailProvider"
+
+EXPORTS
+    DllGetClassObject   PRIVATE
+    DllCanUnloadNow     PRIVATE
+    DllRegisterServer   PRIVATE
+    DllUnregisterServer PRIVATE

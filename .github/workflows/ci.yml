@@ -1,0 +1,92 @@
+# Author: Anwarul Haque (@HYPERMX7) | Contact: 7739399007
+#
+# Continuous integration of HyperPDF: it builds the application, the native Shell
+# extensions and the installer, and it runs the test suite.
+
+name: ci
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  PDFIUM_VERSION: 158.0.8111
+
+jobs:
+  build:
+    name: Build and test
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install the .NET 8 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore the NuGet packages
+        run: dotnet restore HyperPDF.sln
+
+      - name: Build the solution
+        run: dotnet build HyperPDF.sln --configuration Release --no-restore /warnaserror
+
+      - name: Run the tests
+        run: dotnet test src\App\HyperPDF.Tests\HyperPDF.Tests.csproj --configuration Release --no-build --logger "trx"
+
+      - name: Add MSBuild to the PATH
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Add CMake to the PATH
+        uses: lukka/get-cmake@latest
+
+      - name: Fetch PDFium
+        shell: pwsh
+        run: tools\fetch-pdfium.ps1 -Version '${{ env.PDFIUM_VERSION }}'
+
+      - name: Build the native Shell extensions
+        shell: pwsh
+        run: tools\build-native.ps1 -Configuration Release
+
+      - name: Install Inno Setup
+        shell: pwsh
+        run: |
+          $url = 'https://files.jrsoftware.org/is/6/innosetup-6.7.3.exe'
+          Invoke-WebRequest -Uri $url -OutFile innosetup.exe -UseBasicParsing
+          Start-Process .\innosetup.exe -ArgumentList '/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-' -Wait
+
+      - name: Publish the application
+        shell: pwsh
+        run: tools\build-app.ps1 -Configuration Release
+
+      - name: Build the installer
+        shell: pwsh
+        run: installer\build-installer.ps1 -SkipAppBuild -SkipNativeBuild -Configuration Release
+
+      - name: Upload the application
+        uses: actions/upload-artifact@v4
+        with:
+          name: HyperPDF-app
+          path: build\app\
+
+      - name: Upload the native Shell extensions
+        uses: actions/upload-artifact@v4
+        with:
+          name: HyperPDF-shell
+          path: build\native\
+
+      - name: Upload the installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: HyperPDF-setup
+          path: build\installer\HyperPDF-*.exe
+
+      - name: Upload the test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: '**\*.trx'

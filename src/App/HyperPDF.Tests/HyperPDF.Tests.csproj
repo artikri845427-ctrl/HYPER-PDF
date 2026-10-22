@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>12.0</LangVersion>
+    <RootNamespace>HyperPDF.Tests</RootNamespace>
+    <AssemblyName>HyperPDF.Tests</AssemblyName>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <Platforms>x64</Platforms>
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <NoWarn>$(NoWarn);CA1416;WFAC010</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- The Windows Desktop SDK replaces the default implicit usings, System.IO has to be added back. -->
+    <Using Include="System.IO" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HyperPDF.csproj" />
+  </ItemGroup>
+
+  <!--
+    The native PDFium library must sit next to the test host, otherwise the PDFium
+    interop tests fail with a DllNotFoundException.
+  -->
+  <Target Name="CopyPdfiumNativeForTests" AfterTargets="Build">
+    <PropertyGroup>
+      <PdfiumNativeSource>$(Pkgbblanchon_PDFium_Win32)\runtimes\win-x64\native\pdfium.dll</PdfiumNativeSource>
+    </PropertyGroup>
+    <Copy SourceFiles="$(PdfiumNativeSource)"
+          DestinationFolder="$(OutDir)"
+          Condition="Exists('$(PdfiumNativeSource)')"
+          SkipUnchangedFiles="true" />
+  </Target>
+
+</Project>
